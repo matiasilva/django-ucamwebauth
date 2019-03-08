@@ -1,0 +1,111 @@
+# CI configuration which tests ucamwebauth against supported Django and Python
+# versions.
+#
+# GitLab CI does nto support Matrix builds in the traditional sense. Instead we
+# build up a matrix of test jobs using inheritance via "extends".
+#
+# See also: https://gitlab.com/gitlab-org/gitlab-ce/issues/19199
+
+# Run test suite against supported Python/Django combinations.
+python27-django111:
+  extends: .py27
+  variables:
+    DJANGO_VERSION: "1.11.0"
+
+python34-django111:
+  extends: .py34
+  variables:
+    DJANGO_VERSION: "1.11.0"
+
+python35-django111:
+  extends: .py35
+  variables:
+    DJANGO_VERSION: "1.11.0"
+
+python36-django111:
+  extends: .py36
+  variables:
+    DJANGO_VERSION: "1.11.0"
+
+python37-django111:
+  extends: .py37
+  variables:
+    DJANGO_VERSION: "1.11.0"
+
+python34-django20:
+  extends: .py34
+  variables:
+    DJANGO_VERSION: "2.0.0"
+
+python35-django20:
+  extends: .py35
+  variables:
+    DJANGO_VERSION: "2.0.0"
+
+python36-django20:
+  extends: .py36
+  variables:
+    DJANGO_VERSION: "2.0.0"
+
+python37-django20:
+  extends: .py37
+  variables:
+    DJANGO_VERSION: "2.0.0"
+
+python35-django21:
+  extends: .py35
+  variables:
+    DJANGO_VERSION: "2.1.0"
+
+python36-django21:
+  extends: .py36
+  variables:
+    DJANGO_VERSION: "2.1.0"
+
+python37-django21:
+  extends: .py37
+  variables:
+    DJANGO_VERSION: "2.1.0"
+
+# Template jobs which run tests in various Python versions.
+.py27:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "2.7"
+
+.py34:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "3.4"
+
+.py35:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "3.5"
+
+.py36:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "3.6"
+
+.py37:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "3.7"
+
+# Base test template job.
+.test:
+  image: python:${PYTHON_VERSION}
+
+  script:
+    # Install the latest version of Django which is compatible with the
+    # specifier. I.e. a DJANGO_VERSION of 2.1.0 will install the latest version
+    # from the 2.1 series.
+    - pip install django~=$DJANGO_VERSION
+    - pip install -r requirements.txt
+    - python setup.py -q install
+    - python runtests.py
+
+  variables:
+    PYTHON_VERSION: "replace-with-x.y"
+    DJANGO_CERSION: "replace-with-x.y.0"
