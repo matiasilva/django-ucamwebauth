@@ -67,6 +67,21 @@ python37-django21:
   variables:
     DJANGO_VERSION: "2.1.0"
 
+python35-django22:
+  extends: .py35
+  variables:
+    DJANGO_VERSION: "2.2.0"
+
+python36-django22:
+  extends: .py36
+  variables:
+    DJANGO_VERSION: "2.2.0"
+
+python37-django22:
+  extends: .py37
+  variables:
+    DJANGO_VERSION: "2.2.0"
+
 # Template jobs which run tests in various Python versions.
 .py27:
   extends: .test
