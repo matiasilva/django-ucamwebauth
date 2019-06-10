@@ -52,3 +52,14 @@ class RavenAuthBackend(RemoteUserBackend):
     @property
     def create_unknown_user(self):
         return setting('UCAMWEBAUTH_CREATE_USER', default=True)
+
+    def configure_user(self, *args, **kwargs):
+        """
+        Configure a user after creation and return the updated user.
+
+        We make sure that the new user created has an unusable password.
+        """
+        user = super(RavenAuthBackend, self).configure_user(*args, **kwargs)
+        user.set_unusable_password()
+        user.save()
+        return user
