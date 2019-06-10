@@ -1,4 +1,3 @@
-import django
 import logging
 from django.contrib.auth.backends import RemoteUserBackend
 from ucamwebauth import RavenResponse
@@ -37,10 +36,7 @@ class RavenAuthBackend(RemoteUserBackend):
                                                           "access this site"))
             raise UserNotAuthorised("Authentication successful but you are not authorised to access this site")
 
-        if django.VERSION[0] <= 1 and django.VERSION[1] <= 10:
-            user = super(RavenAuthBackend, self).authenticate(response.principal)
-        else:
-            user = super(RavenAuthBackend, self).authenticate(request, response.principal)
+        user = super(RavenAuthBackend, self).authenticate(request, response.principal)
 
         # creates (if necessary) the UserProfile model and update the raven_for_life property from the RavenResponse
         if user:

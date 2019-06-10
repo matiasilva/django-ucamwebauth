@@ -62,7 +62,7 @@ UCAMWEBAUTH_CERTS: a dictionary including key names and their associated certifi
 UCAMWEBAUTH_TIMEOUT: An integer with the time (in seconds) that has to pass to consider an authentication timed out
     (Default to 30).
 UCAMWEBAUTH_REDIRECT_AFTER_LOGIN: The url where you want to redirect the user after login (Default to '/').
-UCAMWEBAUTH_CREATE_USE: This defaults to True, allowing the autocreation of users who have been successfully 
+UCAMWEBAUTH_CREATE_USER: This defaults to True, allowing the autocreation of users who have been successfully 
 authenticated by Raven, but do not exist in the local database. The user is created with set_unusable_password().
 ```
 
