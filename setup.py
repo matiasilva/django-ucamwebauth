@@ -1,12 +1,10 @@
 #!/usr/bin/env python
-
-from distutils.core import setup
-from setuptools import find_packages
+from setuptools import setup, find_packages
 
 setup(
     name='django-ucamwebauth',
     description='A Django authentication backend for Ucam-WebAuth a.k.a. Raven',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     url='https://gitlab.developers.cam.ac.uk/uis/devops/django/ucamwebauth',
     # When changing this version number, remember to update
     # django-ucamwebauth.spec and debian/changelog.
@@ -16,7 +14,7 @@ setup(
     author_email='raven-support@cam.ac.uk',
     packages=find_packages(),
     include_package_data=True,
-    install_requires=['pyOpenSSL'],
+    install_requires=['django>=1.11', 'pyOpenSSL'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',

@@ -156,7 +156,8 @@ class RavenTestCase(TestCase):
 
     def test_login_invalid_version_fails_with_template(self):
         with self.settings(
-                MIDDLEWARE_CLASSES=(
+                MIDDLEWARE=[
+                    'django.middleware.security.SecurityMiddleware',
                     'django.contrib.sessions.middleware.SessionMiddleware',
                     'django.middleware.common.CommonMiddleware',
                     'django.middleware.csrf.CsrfViewMiddleware',
@@ -164,7 +165,8 @@ class RavenTestCase(TestCase):
                     'django.contrib.messages.middleware.MessageMiddleware',
                     'django.middleware.clickjacking.XFrameOptionsMiddleware',
                     'ucamwebauth.middleware.DefaultErrorBehaviour',
-                )):
+                ],
+        ):
             response = self.client.get(reverse('raven_return'), {'WLS-Response': self.get_wls_response(raven_ver='4')})
         self.assertContains(response, 'Unsupported version: 4', status_code=500)
         self.assertNotIn('_auth_user_id', self.client.session)
@@ -207,7 +209,8 @@ class RavenTestCase(TestCase):
     def test_login_issue_future_fails_with_template(self):
         """Tests that Raven responses issued in the future fail validation"""
         with self.settings(
-                MIDDLEWARE_CLASSES=(
+                MIDDLEWARE=[
+                    'django.middleware.security.SecurityMiddleware',
                     'django.contrib.sessions.middleware.SessionMiddleware',
                     'django.middleware.common.CommonMiddleware',
                     'django.middleware.csrf.CsrfViewMiddleware',
@@ -215,7 +218,8 @@ class RavenTestCase(TestCase):
                     'django.contrib.messages.middleware.MessageMiddleware',
                     'django.middleware.clickjacking.XFrameOptionsMiddleware',
                     'ucamwebauth.middleware.DefaultErrorBehaviour',
-                )):
+                ],
+        ):
             response = self.client.get(reverse('raven_return'),
                                        {'WLS-Response': create_wls_response(
                                            raven_issue=(datetime.utcnow() +
@@ -347,7 +351,8 @@ class RavenTestCase(TestCase):
     def test_not_allow_raven_for_life_with_template(self):
         """Test Raven for life accounts credentials"""
         with self.settings(
-                MIDDLEWARE_CLASSES=(
+                MIDDLEWARE=[
+                    'django.middleware.security.SecurityMiddleware',
                     'django.contrib.sessions.middleware.SessionMiddleware',
                     'django.middleware.common.CommonMiddleware',
                     'django.middleware.csrf.CsrfViewMiddleware',
@@ -355,7 +360,8 @@ class RavenTestCase(TestCase):
                     'django.contrib.messages.middleware.MessageMiddleware',
                     'django.middleware.clickjacking.XFrameOptionsMiddleware',
                     'ucamwebauth.middleware.DefaultErrorBehaviour',
-                )):
+                ],
+        ):
             response = self.client.get(reverse('raven_return'),
                                        {'WLS-Response': self.get_wls_response(raven_user=RAVEN_FORLIVE_USER)})
         self.assertContains(response, 'Authentication successful but you are not authorised to access this site',

@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/uisautomation/django-ucamwebauth.svg?branch=master)](https://travis-ci.org/uisautomation/django-ucamwebauth)
-
 # Introduction
 
 django-ucamwebauth is a library which provides use of Cambridge University's 
@@ -28,11 +26,19 @@ This allows both normal Django login and Raven login.
 You should then enable the URLs for ucamwebauth:
 
 ````python
-urlpatterns = patterns('',
+#Django 1.11
+urlpatterns = [
     ...
     url(r'', include('ucamwebauth.urls')),
     ...
-)
+]
+
+#Django >=2.0
+urlpatterns = [
+    ...
+    path(r'', include('ucamwebauth.urls')),
+    ...
+]
 ````
 
 ## Minimum Config Settings
@@ -97,22 +103,22 @@ wOq24EIbX5LquL9w+uvnfXw=
 There are five possible exceptions that can be raised using this module: MalformedResponseError, InvalidResponseError,
 PublicKeyNotFoundError, and OtherStatusCode that return HTTP 500, or UserNotAuthorised that returns 403. You can catch 
 these exceptions using process_exception middleware 
-(https://docs.djangoproject.com/en/1.7/topics/http/middleware/#process_exception) to customize what the user will 
+(https://docs.djangoproject.com/en/2.2/topics/http/middleware/#process_exception) to customize what the user will 
 receive as a response. The module has a default behaviour for these exceptions with HTTP error codes and using their 
 corresponding templates. To use the default behaviour just add:
  
 ```python
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     ...
     'ucamwebauth.middleware.DefaultErrorBehaviour',
     ...
-)
+]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     ...
     'ucamwebauth',
     ...
-)
+]
 ```
 
 You can also rewrite the ucamwebauth_\<httpcode\>.html templates. You only need to add the following lines to your own if 
