@@ -1,11 +1,13 @@
 from django.contrib import messages
 from django.http import HttpResponseServerError, HttpResponseForbidden
 from django.template.loader import get_template
+from django.utils.deprecation import MiddlewareMixin
+
 from ucamwebauth import MalformedResponseError, InvalidResponseError, PublicKeyNotFoundError, UserNotAuthorised, \
     OtherStatusCode
 
 
-class DefaultErrorBehaviour():
+class DefaultErrorBehaviour(MiddlewareMixin):
     """ A middleware that catches django-ucamwebauth exceptions and show HTTP 500 or HTTP 403 error messages,
     depending of the error. Furthermore, it uses templates that can be rewritten by a developer.
     """

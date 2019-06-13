@@ -1,4 +1,3 @@
-import django
 import logging
 from django.contrib.auth.backends import RemoteUserBackend
 from ucamwebauth import RavenResponse
@@ -37,10 +36,7 @@ class RavenAuthBackend(RemoteUserBackend):
                                                           "access this site"))
             raise UserNotAuthorised("Authentication successful but you are not authorised to access this site")
 
-        if django.VERSION[0] <= 1 and django.VERSION[1] <= 10:
-            user = super(RavenAuthBackend, self).authenticate(response.principal)
-        else:
-            user = super(RavenAuthBackend, self).authenticate(request, response.principal)
+        user = super(RavenAuthBackend, self).authenticate(request, response.principal)
 
         # creates (if necessary) the UserProfile model and update the raven_for_life property from the RavenResponse
         if user:
@@ -56,3 +52,14 @@ class RavenAuthBackend(RemoteUserBackend):
     @property
     def create_unknown_user(self):
         return setting('UCAMWEBAUTH_CREATE_USER', default=True)
+
+    def configure_user(self, *args, **kwargs):
+        """
+        Configure a user after creation and return the updated user.
+
+        We make sure that the new user created has an unusable password.
+        """
+        user = super(RavenAuthBackend, self).configure_user(*args, **kwargs)
+        user.set_unusable_password()
+        user.save()
+        return user

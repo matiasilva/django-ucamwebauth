@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/uisautomation/django-ucamwebauth.svg?branch=master)](https://travis-ci.org/uisautomation/django-ucamwebauth)
-
 # Introduction
 
 django-ucamwebauth is a library which provides use of Cambridge University's 
@@ -28,11 +26,19 @@ This allows both normal Django login and Raven login.
 You should then enable the URLs for ucamwebauth:
 
 ````python
-urlpatterns = patterns('',
+#Django 1.11
+urlpatterns = [
     ...
     url(r'', include('ucamwebauth.urls')),
     ...
-)
+]
+
+#Django >=2.0
+urlpatterns = [
+    ...
+    path(r'', include('ucamwebauth.urls')),
+    ...
+]
 ````
 
 ## Minimum Config Settings
@@ -56,7 +62,7 @@ UCAMWEBAUTH_CERTS: a dictionary including key names and their associated certifi
 UCAMWEBAUTH_TIMEOUT: An integer with the time (in seconds) that has to pass to consider an authentication timed out
     (Default to 30).
 UCAMWEBAUTH_REDIRECT_AFTER_LOGIN: The url where you want to redirect the user after login (Default to '/').
-UCAMWEBAUTH_CREATE_USE: This defaults to True, allowing the autocreation of users who have been successfully 
+UCAMWEBAUTH_CREATE_USER: This defaults to True, allowing the autocreation of users who have been successfully 
 authenticated by Raven, but do not exist in the local database. The user is created with set_unusable_password().
 ```
 
@@ -97,22 +103,22 @@ wOq24EIbX5LquL9w+uvnfXw=
 There are five possible exceptions that can be raised using this module: MalformedResponseError, InvalidResponseError,
 PublicKeyNotFoundError, and OtherStatusCode that return HTTP 500, or UserNotAuthorised that returns 403. You can catch 
 these exceptions using process_exception middleware 
-(https://docs.djangoproject.com/en/1.7/topics/http/middleware/#process_exception) to customize what the user will 
+(https://docs.djangoproject.com/en/2.2/topics/http/middleware/#process_exception) to customize what the user will 
 receive as a response. The module has a default behaviour for these exceptions with HTTP error codes and using their 
 corresponding templates. To use the default behaviour just add:
  
 ```python
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     ...
     'ucamwebauth.middleware.DefaultErrorBehaviour',
     ...
-)
+]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     ...
     'ucamwebauth',
     ...
-)
+]
 ```
 
 You can also rewrite the ucamwebauth_\<httpcode\>.html templates. You only need to add the following lines to your own if 

@@ -19,14 +19,15 @@ settings.configure(
         'ucamwebauth',
     ),
     AUTHENTICATION_BACKENDS=('ucamwebauth.backends.RavenAuthBackend', ),
-    MIDDLEWARE_CLASSES=(
+    MIDDLEWARE=[
+        'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    ),
+        'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    ],
     UCAMWEBAUTH_LOGIN_URL='https://demo.raven.cam.ac.uk/auth/authenticate.html',
     UCAMWEBAUTH_LOGOUT_URL='https://demo.raven.cam.ac.uk/auth/logout.html',
     UCAMWEBAUTH_CERTS={901: """-----BEGIN CERTIFICATE-----
