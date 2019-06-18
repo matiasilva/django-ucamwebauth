@@ -5,6 +5,7 @@ setup(
     name='django-ucamwebauth',
     description='A Django authentication backend for Ucam-WebAuth a.k.a. Raven',
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     url='https://gitlab.developers.cam.ac.uk/uis/devops/django/ucamwebauth',
     # When changing this version number, remember to update
     # django-ucamwebauth.spec and debian/changelog.
