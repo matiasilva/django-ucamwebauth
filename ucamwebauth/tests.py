@@ -112,24 +112,26 @@ class RavenTestCase(TestCase):
     fixtures = ['users.json']
 
     def __init__(self, *args, **kwargs):
-        self.client = Client()
         super(RavenTestCase, self).__init__(*args, **kwargs)
+
+    def setup(self):
+        self.client = Client()
 
     def get_wls_response(self, raven_user=RAVEN_TEST_USER, raven_pwd=RAVEN_TEST_PWD, raven_ver='3',
                          raven_url=None, raven_desc='',
                          raven_aauth='pwd', raven_iact='', raven_msg='',
                          raven_params='', raven_fail='', cancel=False):
-        # This request only test when raven_aauth is pwd and raven_iact is omitted
+        # This request only tests when raven_aauth is pwd and raven_iact are omitted
         if raven_url is None:
             raven_url = (
                 get_return_url(RequestFactory().get(reverse('raven_return'))))
         if cancel:
-            response = requests.post('https://demo.raven.cam.ac.uk/auth/authenticate2.html',
+            response = requests.post('https://test.legacy.raven.cam.ac.uk/auth/authenticate2.html',
                                      {'userid': raven_user, 'pwd': raven_pwd, 'ver': raven_ver, 'url': raven_url,
                                       'params': raven_params, 'fail': raven_fail, 'cancel': 'Cancel'},
                                      allow_redirects=False)
         else:
-            response = requests.post('https://demo.raven.cam.ac.uk/auth/authenticate2.html',
+            response = requests.post('https://test.legacy.raven.cam.ac.uk/auth/authenticate2.html',
                                      {'userid': raven_user, 'pwd': raven_pwd, 'ver': raven_ver, 'url': raven_url,
                                       'params': raven_params, 'fail': raven_fail},
                                      allow_redirects=False)
