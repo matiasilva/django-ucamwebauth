@@ -7,21 +7,6 @@
 # See also: https://gitlab.com/gitlab-org/gitlab-ce/issues/19199
 
 # Run test suite against supported Python/Django combinations.
-python27-django111:
-  extends: .py27
-  variables:
-    DJANGO_VERSION: "1.11.0"
-
-python34-django111:
-  extends: .py34
-  variables:
-    DJANGO_VERSION: "1.11.0"
-
-python35-django111:
-  extends: .py35
-  variables:
-    DJANGO_VERSION: "1.11.0"
-
 python36-django111:
   extends: .py36
   variables:
@@ -31,46 +16,6 @@ python37-django111:
   extends: .py37
   variables:
     DJANGO_VERSION: "1.11.0"
-
-python34-django20:
-  extends: .py34
-  variables:
-    DJANGO_VERSION: "2.0.0"
-
-python35-django20:
-  extends: .py35
-  variables:
-    DJANGO_VERSION: "2.0.0"
-
-python36-django20:
-  extends: .py36
-  variables:
-    DJANGO_VERSION: "2.0.0"
-
-python37-django20:
-  extends: .py37
-  variables:
-    DJANGO_VERSION: "2.0.0"
-
-python35-django21:
-  extends: .py35
-  variables:
-    DJANGO_VERSION: "2.1.0"
-
-python36-django21:
-  extends: .py36
-  variables:
-    DJANGO_VERSION: "2.1.0"
-
-python37-django21:
-  extends: .py37
-  variables:
-    DJANGO_VERSION: "2.1.0"
-
-python35-django22:
-  extends: .py35
-  variables:
-    DJANGO_VERSION: "2.2.0"
 
 python36-django22:
   extends: .py36
@@ -82,22 +27,12 @@ python37-django22:
   variables:
     DJANGO_VERSION: "2.2.0"
 
+python38-django22:
+  extends: .py38
+  variables:
+    DJANGO_VERSION: "2.2.0"
+
 # Template jobs which run tests in various Python versions.
-.py27:
-  extends: .test
-  variables:
-    PYTHON_VERSION: "2.7"
-
-.py34:
-  extends: .test
-  variables:
-    PYTHON_VERSION: "3.4"
-
-.py35:
-  extends: .test
-  variables:
-    PYTHON_VERSION: "3.5"
-
 .py36:
   extends: .test
   variables:
@@ -107,6 +42,11 @@ python37-django22:
   extends: .test
   variables:
     PYTHON_VERSION: "3.7"
+
+.py38:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "3.8"
 
 # Base test template job.
 .test:
