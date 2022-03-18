@@ -7,7 +7,7 @@ except ImportError:
 from OpenSSL.crypto import FILETYPE_PEM, load_certificate, verify
 from django.conf import settings
 from ucamwebauth.utils import decode_sig, setting, parse_time, get_return_url
-from ucamwebauth.exceptions import (MalformedResponseError, InvalidResponseError, PublicKeyNotFoundError,
+from ucamwebauth.exceptions import (MalformedResponseError, InvalidResponseError, PublicKeyNotFoundError,  # noqa: F401
                                     UserNotAuthorised, OtherStatusCode)
 
 
@@ -142,7 +142,7 @@ class RavenResponse(object):
         # life (optional): If the user has established an authenticated 'session' with the WLS, this indicates the
         # remaining life (in seconds) of that session. If present, a WAA SHOULD use this to establish an upper limit
         # to the lifetime of any session that it establishes.
-        # TODO https://docs.djangoproject.com/en/dev/topics/http/sessions/#django.contrib.sessions.backends.base.SessionBase.set_expiry
+        # TODO https://docs.djangoproject.com/en/dev/topics/http/sessions/#django.contrib.sessions.backends.base.SessionBase.set_expiry  # noqa: E501
         if tokens[10-versioni] != "":
             try:
                 self.life = int(tokens[10-versioni])

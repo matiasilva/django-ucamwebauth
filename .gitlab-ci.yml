@@ -63,4 +63,4 @@ python38-django22:
 
   variables:
     PYTHON_VERSION: "replace-with-x.y"
-    DJANGO_CERSION: "replace-with-x.y.0"
+    DJANGO_VERSION: "replace-with-x.y.0"

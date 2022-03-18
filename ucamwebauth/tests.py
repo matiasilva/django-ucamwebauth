@@ -428,7 +428,7 @@ class RavenTestCase(TestCase):
         try:
             # Passing no args causes an exception.
             RavenAuthBackend().authenticate()
-        except:
+        except Exception:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             found = False
             while exc_traceback is not None:

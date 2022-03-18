@@ -30,7 +30,8 @@ settings.configure(
     ],
     UCAMWEBAUTH_LOGIN_URL='https://test.legacy.raven.cam.ac.uk/auth/authenticate.html',
     UCAMWEBAUTH_LOGOUT_URL='https://test.legacy.raven.cam.ac.uk/auth/logout.html',
-    UCAMWEBAUTH_CERTS={901: """-----BEGIN CERTIFICATE-----
+    UCAMWEBAUTH_CERTS={
+        901: """-----BEGIN CERTIFICATE-----
 MIIDzTCCAzagAwIBAgIBADANBgkqhkiG9w0BAQQFADCBpjELMAkGA1UEBhMCR0Ix
 EDAOBgNVBAgTB0VuZ2xhbmQxEjAQBgNVBAcTCUNhbWJyaWRnZTEgMB4GA1UEChMX
 VW5pdmVyc2l0eSBvZiBDYW1icmlkZ2UxLTArBgNVBAsTJENvbXB1dGluZyBTZXJ2
@@ -54,7 +55,7 @@ LSxbGuFG9yfPFIqaSntlYMxKKB5ba/tIAMzyAOHxdEM5hi1DXRsOok3ElWjOw9oN
 wOq24EIbX5LquL9w+uvnfXw=
 -----END CERTIFICATE-----
 """,
-900: """-----BEGIN CERTIFICATE-----
+        900: """-----BEGIN CERTIFICATE-----
 MIID1jCCAr4CCQCeVWORbpJWcTANBgkqhkiG9w0BAQsFADCBrDELMAkGA1UEBhMC
 VUsxFzAVBgNVBAgMDkNhbWJyaWRnZXNoaXJlMRIwEAYDVQQHDAlDYW1icmlkZ2Ux
 IDAeBgNVBAoMF1VuaXZlcnNpdHkgb2YgQ2FtYnJpZGdlMSgwJgYDVQQLDB9Vbml2
