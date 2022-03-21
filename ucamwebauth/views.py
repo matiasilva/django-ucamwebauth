@@ -3,8 +3,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 try:
     from urllib import urlencode
+    from urlparse import urlparse
 except ImportError:
-    from urllib.parse import urlencode
+    from urllib.parse import urlencode, urlparse
 from ucamwebauth import MalformedResponseError
 from ucamwebauth.utils import setting, HttpResponseSeeOther, get_next_from_wls_response, get_return_url
 
@@ -22,10 +23,16 @@ def raven_return(request):
         return redirect(setting('UCAMWEBAUTH_LOGOUT_REDIRECT', default='/'))
     else:
         login(request, user)
-    
+
     # Redirect somewhere sensible
 
     redirect_url = get_next_from_wls_response(token)
+
+    # Validate redirect_url is relative path or matches host
+    if redirect_url is not None:
+        redirect_host = urlparse(redirect_url).netloc
+        if redirect_host != '' and redirect_host != request.get_host():
+            redirect_url = None
 
     if redirect_url is not None and setting('UCAMWEBAUTH_REDIRECT_AFTER_LOGIN', default=None) is None:
         return HttpResponseRedirect(redirect_url)

@@ -26,7 +26,7 @@ from ucamwebauth.utils import get_next_from_wls_response, get_return_url
 from ucamwebauth.backends import RavenAuthBackend
 
 RAVEN_TEST_USER = 'test0001'
-RAVEN_TEST_PWD = 'test'
+RAVEN_TEST_PWD = 'testing_not_secret'
 RAVEN_NEW_USER = 'test0002'
 RAVEN_FORLIVE_USER = 'test0500'
 
@@ -409,7 +409,7 @@ class RavenTestCase(TestCase):
         self.assertEqual(next_p, testparams['next'][0])
 
     def test_empty_next(self):
-        response = self.client.get('/accounts/login/')
+        response = self.client.get(reverse('raven_login'))
         self.assertEqual(response.status_code, 303)
         self.assertTrue(response.url.startswith(settings.UCAMWEBAUTH_LOGIN_URL))
 
@@ -421,6 +421,21 @@ class RavenTestCase(TestCase):
                      ['params'][0])['next'][0],
             testnext)
 
+    def test_redirect_local(self):
+        testparams = {'next': '/local/redirect'}
+        raw = self.get_wls_response(raven_params=urlencode(testparams, doseq=True))
+        response = self.client.get(reverse('raven_return'), {'WLS-Response': raw})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, testparams['next'])
+
+    def test_redirect_external(self):
+        testparams = {'next': 'http://foo.example/!++!%2F/'}
+        raw = self.get_wls_response(raven_params=urlencode(testparams, doseq=True))
+        response = self.client.get(reverse('raven_return'), {'WLS-Response': raw})
+        self.assertEqual(response.status_code, 302)
+        # External redirect becomes root
+        self.assertEqual(response.url, '/')
+
     def test_exception_trace(self):
         # This is a bit fragile.  The aim is to check that RavenAuthBackend
         # isn't overwriting the traceback of exceptions raised by
@@ -428,7 +443,7 @@ class RavenTestCase(TestCase):
         try:
             # Passing no args causes an exception.
             RavenAuthBackend().authenticate()
-        except:
+        except Exception:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             found = False
             while exc_traceback is not None:

@@ -4,4 +4,10 @@ dist
 .DS_Store
 django_ucamwebauth.egg-info
 MANIFEST
-venv/**
+
+venv/
+.venv/
+env/
+.env/
+
+.vscode
