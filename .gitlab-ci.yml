@@ -1,10 +1,20 @@
 # CI configuration which tests ucamwebauth against supported Django and Python
 # versions.
 #
-# GitLab CI does nto support Matrix builds in the traditional sense. Instead we
+# GitLab CI does not support Matrix builds in the traditional sense. Instead we
 # build up a matrix of test jobs using inheritance via "extends".
 #
 # See also: https://gitlab.com/gitlab-org/gitlab-ce/issues/19199
+
+include:
+  # Allow publishing to pypi
+  - project: 'uis/devops/continuous-delivery/ci-templates'
+    ref: '1.7.1'
+    file: '/pypi-release.yml'
+
+stages:
+  - test
+  - deploy
 
 # Run test suite against supported Python/Django combinations.
 python36-django111:
@@ -32,6 +42,11 @@ python38-django22:
   variables:
     DJANGO_VERSION: "2.2.0"
 
+python39-django22:
+  extends: .py39
+  variables:
+    DJANGO_VERSION: "2.2.0"
+
 # Template jobs which run tests in various Python versions.
 .py36:
   extends: .test
@@ -48,10 +63,15 @@ python38-django22:
   variables:
     PYTHON_VERSION: "3.8"
 
+.py39:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "3.9"
+
 # Base test template job.
 .test:
   image: python:${PYTHON_VERSION}
-
+  stage: test
   script:
     # Install the latest version of Django which is compatible with the
     # specifier. I.e. a DJANGO_VERSION of 2.1.0 will install the latest version
@@ -64,3 +84,6 @@ python38-django22:
   variables:
     PYTHON_VERSION: "replace-with-x.y"
     DJANGO_VERSION: "replace-with-x.y.0"
+
+pypi-release:
+  needs: ['python39-django22']
