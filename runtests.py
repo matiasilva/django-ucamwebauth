@@ -9,6 +9,7 @@ warnings.filterwarnings('error', category=DeprecationWarning, module='ucamwebaut
 
 settings.configure(
     DEBUG=False,
+    SECRET_KEY='mock test value',
     DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': 'test.db', }},
     TIME_ZONE='Europe/London',
     USE_TZ=True,

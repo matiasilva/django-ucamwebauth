@@ -1,3 +1,4 @@
+
 # CI configuration which tests ucamwebauth against supported Django and Python
 # versions.
 #
@@ -17,42 +18,42 @@ stages:
   - deploy
 
 # Run test suite against supported Python/Django combinations.
-python36-django111:
-  extends: .py36
-  variables:
-    DJANGO_VERSION: "1.11.0"
-
-python37-django111:
+python37-django32:
   extends: .py37
   variables:
-    DJANGO_VERSION: "1.11.0"
+    DJANGO_VERSION: "3.2.0"
 
-python36-django22:
-  extends: .py36
-  variables:
-    DJANGO_VERSION: "2.2.0"
-
-python37-django22:
-  extends: .py37
-  variables:
-    DJANGO_VERSION: "2.2.0"
-
-python38-django22:
+python38-django32:
   extends: .py38
   variables:
-    DJANGO_VERSION: "2.2.0"
+    DJANGO_VERSION: "3.2.0"
 
-python39-django22:
+python38-django40:
+  extends: .py38
+  variables:
+    DJANGO_VERSION: "4.0.0"
+
+python39-django32:
   extends: .py39
   variables:
-    DJANGO_VERSION: "2.2.0"
+    DJANGO_VERSION: "3.2.0"
+
+python39-django40:
+  extends: .py39
+  variables:
+    DJANGO_VERSION: "4.0.0"
+
+python310-django32:
+  extends: .py310
+  variables:
+    DJANGO_VERSION: "3.2.0"
+
+python310-django40:
+  extends: .py310
+  variables:
+    DJANGO_VERSION: "4.0.0"
 
 # Template jobs which run tests in various Python versions.
-.py36:
-  extends: .test
-  variables:
-    PYTHON_VERSION: "3.6"
-
 .py37:
   extends: .test
   variables:
@@ -67,6 +68,11 @@ python39-django22:
   extends: .test
   variables:
     PYTHON_VERSION: "3.9"
+
+.py310:
+  extends: .test
+  variables:
+    PYTHON_VERSION: "3.10"
 
 # Base test template job.
 .test:
@@ -86,4 +92,4 @@ python39-django22:
     DJANGO_VERSION: "replace-with-x.y.0"
 
 pypi-release:
-  needs: ['python39-django22']
+  needs: ['python310-django40']
