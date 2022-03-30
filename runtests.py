@@ -1,6 +1,11 @@
 import logging
+import warnings
 from django.core.management import execute_from_command_line
 from django.conf import settings
+
+
+# fail if our code triggers a DeprecationWarning during tests
+warnings.filterwarnings('error', category=DeprecationWarning, module='ucamwebauth\\.')
 
 settings.configure(
     DEBUG=False,
