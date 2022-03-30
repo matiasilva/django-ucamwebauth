@@ -4,6 +4,7 @@ dist
 .DS_Store
 django_ucamwebauth.egg-info
 MANIFEST
+.tox
 
 venv/
 .venv/
