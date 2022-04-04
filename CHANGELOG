@@ -1,6 +1,14 @@
 django-ucamwebauth changelog
 =============================
 
+2.0.0 - 01/04/2022
+------------------
+
+- Remove support for django 1.11 and 2.2
+- Add support for django 3.2 and 4.0
+- Minimum supported Python version is 3.7 (django 3.2 requires Python 3.7)
+
+
 1.5.2 - 18/03/2022
 ------------------
 

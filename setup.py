@@ -9,13 +9,14 @@ setup(
     url='https://gitlab.developers.cam.ac.uk/uis/devops/django/ucamwebauth',
     # When changing this version number, remember to update
     # django-ucamwebauth.spec and debian/changelog.
-    version='1.5.2',
+    version='2.0.0',
     license='MIT',
     author='DevOps Division, University Information Services, University of Cambridge',
     author_email='raven-support@cam.ac.uk',
     packages=find_packages(),
     include_package_data=True,
-    install_requires=['django>=1.11,<2.3', 'pyOpenSSL', 'requests'],
+    install_requires=['django>=3.2,<5', 'pyOpenSSL', 'requests'],
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',

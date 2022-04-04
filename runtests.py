@@ -1,9 +1,15 @@
 import logging
+import warnings
 from django.core.management import execute_from_command_line
 from django.conf import settings
 
+
+# fail if our code triggers a DeprecationWarning during tests
+warnings.filterwarnings('error', category=DeprecationWarning, module='ucamwebauth\\.')
+
 settings.configure(
     DEBUG=False,
+    SECRET_KEY='mock test value',
     DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': 'test.db', }},
     TIME_ZONE='Europe/London',
     USE_TZ=True,
