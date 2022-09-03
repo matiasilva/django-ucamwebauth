@@ -1,3 +1,8 @@
+# Updates in this fork
+
+This fork simply enables the use of custom user models as opposed to being fixed to Django's default 'auth.User' model, thanks to a solution proposed by an [issue raised](https://gitlab.developers.cam.ac.uk/uis/devops/django/ucamwebauth). The 'raven_for_life' attribute is thus available at 'user.userprofile.raven_for_life' for any generic user.
+
+
 # Introduction
 
 django-ucamwebauth is a library which provides use of Cambridge University's 
