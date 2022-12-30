@@ -34,7 +34,7 @@ def raven_return(request):
         if redirect_host != '' and redirect_host != request.get_host():
             redirect_url = None
 
-    if redirect_url is not None and setting('UCAMWEBAUTH_REDIRECT_AFTER_LOGIN', default=None) is None:
+    if redirect_url is not None:
         return HttpResponseRedirect(redirect_url)
     else:
         return HttpResponseRedirect(setting('UCAMWEBAUTH_REDIRECT_AFTER_LOGIN', default='/'))
